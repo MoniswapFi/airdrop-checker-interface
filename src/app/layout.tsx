@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 import ContextProvider from "@/context";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "MoniSwap Token Airdrop",
@@ -19,6 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ContextProvider cookies={cookies}>{children}</ContextProvider>
+        <Footer />
       </body>
     </html>
   );

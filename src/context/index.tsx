@@ -28,7 +28,7 @@ export const modal = createAppKit({
     analytics: true, // Optional - defaults to your Cloud configuration
   },
   themeVariables: {
-    "--w3m-accent": "#000000",
+    "--w3m-accent": "#F59855",
   },
 });
 
