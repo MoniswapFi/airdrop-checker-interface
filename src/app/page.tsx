@@ -115,7 +115,7 @@ const Page = () => {
                 className="text-white mb-6"
                 style={{ fontFamily: "MinecraftRegular" }}
               >
-                Connect your ETH wallet to check if you're eligible for the
+                Connect your ETH wallet to check if you&apos;re eligible for the
                 $MONI airdrop.
               </p>
               <motion.div
