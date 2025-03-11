@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ConnectButton } from "@/components/ConnectButton";
+import EligibilityChecker from "@/components/EligibilityChecker";
 
 const Page = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -111,19 +111,8 @@ const Page = () => {
               animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <p
-                className="text-white mb-6"
-                style={{ fontFamily: "MinecraftRegular" }}
-              >
-                Connect your ETH wallet to check if you&apos;re eligible for the
-                $MONI airdrop.
-              </p>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ConnectButton />
-              </motion.div>
+              {/* Eligibility checker component will handle all states */}
+              <EligibilityChecker />
             </motion.div>
           </motion.div>
 
