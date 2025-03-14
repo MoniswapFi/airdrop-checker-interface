@@ -1,7 +1,7 @@
 "use client";
 
 import { Network, Alchemy } from "alchemy-sdk";
-import { BERA_PACKS } from "../../utils/ValueConverter";
+import { BERA_FRENS } from "../../utils/ValueConverter";
 
 const utils = {
   hexToDecimal: (hex) => {
@@ -20,14 +20,12 @@ const utils = {
   },
 };
 
-// This function now stores the full result in a global variable
-// but returns only the integer count
-let lastFullResult = null;
+let lastFullFrensResult = null;
 
-export async function checkBeraPacksEligibility(address) {
+export async function checkBeraFrensEligibility(address) {
   if (!address) {
     console.log("No wallet connected");
-    lastFullResult = { eligible: false, message: "No wallet connected" };
+    lastFullFrensResult = { eligible: false, message: "No wallet connected" };
     return 0;
   }
 
@@ -49,7 +47,7 @@ export async function checkBeraPacksEligibility(address) {
       !response.tokenBalances.length ||
       response.tokenBalances[0].tokenBalance === "0x0"
     ) {
-      lastFullResult = { eligible: false, message: "You're not eligible" };
+      lastFullFrensResult = { eligible: false, message: "You're not eligible" };
       return 0;
     }
 
@@ -60,6 +58,7 @@ export async function checkBeraPacksEligibility(address) {
     // Get token metadata
     const metadata = await alchemy.core.getTokenMetadata(contractAddress);
 
+    // Format the balance
     const formattedBalance = utils.formatTokenAmount(
       decimalBalance,
       metadata.decimals,
@@ -67,37 +66,39 @@ export async function checkBeraPacksEligibility(address) {
 
     const tokenCount = parseFloat(formattedBalance);
 
+    // Check if token count is effectively zero (handle potential floating point issues)
     if (tokenCount <= 0.000001) {
-      lastFullResult = { eligible: false, message: "You're not eligible" };
+      lastFullFrensResult = { eligible: false, message: "You're not eligible" };
       return 0;
     }
 
-    const baseValue = BERA_PACKS;
+    const baseValue = BERA_FRENS;
     const usdValue = tokenCount * baseValue;
 
-    lastFullResult = {
+    lastFullFrensResult = {
       eligible: true,
       balance: formattedBalance,
       usdValue: usdValue,
       symbol: metadata.symbol || "BERA",
-      tokenName: metadata.name || "Bera Pack",
+      tokenName: metadata.name || "Bera Frens",
     };
 
     // Return only the token count as an integer
     return Math.floor(tokenCount);
   } catch (error) {
     console.error("Error checking eligibility:", error);
-    lastFullResult = { eligible: false, message: `Error: ${error.message}` };
+    lastFullFrensResult = {
+      eligible: false,
+      message: `Error: ${error.message}`,
+    };
     return 0;
   }
 }
 
-// Export the full result for component access
-export function getLastFullResult() {
-  return lastFullResult;
+export function getLastFullFrensResult() {
+  return lastFullFrensResult;
 }
 
-// Component is kept for backward compatibility but now returns only the count
-export default function BeraPackBalance({ address }) {
-  return checkBeraPacksEligibility(address);
+export default function BeraFrensBalance({ address }) {
+  return checkBeraFrensEligibility(address);
 }
