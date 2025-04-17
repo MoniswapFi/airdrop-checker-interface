@@ -4,12 +4,12 @@ import { Network, Alchemy } from "alchemy-sdk";
 import { BERA_PACKS } from "../../utils/ValueConverter";
 
 const utils = {
-  hexToDecimal: (hex) => {
+  hexToDecimal: (hex: string) => {
     const cleanHex = hex.startsWith("0x") ? hex.slice(2) : hex;
     return parseInt(cleanHex, 16);
   },
 
-  formatTokenAmount: (amount, decimals = 18) => {
+  formatTokenAmount: (amount: number, decimals = 18) => {
     const divisor = Math.pow(10, decimals);
     const formatted = amount / divisor;
 
@@ -22,9 +22,9 @@ const utils = {
 
 // This function now stores the full result in a global variable
 // but returns only the integer count
-let lastFullResult = null;
+let lastFullResult: { eligible: boolean; message?: string; balance?: string; usdValue?: number; symbol?: string; tokenName?: string; } | null = null;
 
-export async function checkBeraPacksEligibility(address) {
+export async function checkBeraPacksEligibility(address: string) {
   if (!address) {
     console.log("No wallet connected");
     lastFullResult = { eligible: false, message: "No wallet connected" };
@@ -55,14 +55,14 @@ export async function checkBeraPacksEligibility(address) {
 
     // Convert hex balance to decimal
     const tokenBalance = response.tokenBalances[0];
-    const decimalBalance = utils.hexToDecimal(tokenBalance.tokenBalance);
+    const decimalBalance = utils.hexToDecimal(tokenBalance.tokenBalance as string);
 
     // Get token metadata
     const metadata = await alchemy.core.getTokenMetadata(contractAddress);
 
     const formattedBalance = utils.formatTokenAmount(
       decimalBalance,
-      metadata.decimals,
+      metadata.decimals as number,
     );
 
     const tokenCount = parseFloat(formattedBalance);
@@ -85,7 +85,7 @@ export async function checkBeraPacksEligibility(address) {
 
     // Return only the token count as an integer
     return Math.floor(tokenCount);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error checking eligibility:", error);
     lastFullResult = { eligible: false, message: `Error: ${error.message}` };
     return 0;
@@ -98,6 +98,6 @@ export function getLastFullResult() {
 }
 
 // Component is kept for backward compatibility but now returns only the count
-export default function BeraPackBalance({ address }) {
+export default function BeraPackBalance({ address }: { address: string }) {
   return checkBeraPacksEligibility(address);
 }
