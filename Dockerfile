@@ -4,7 +4,8 @@ COPY src ./src/
 COPY public ./public/
 COPY .env ./
 COPY next.config.ts ./
-COPY *.json ./
+COPY package.json ./
+COPY tsconfig.json ./
 COPY *.js ./
 RUN yarn
 RUN yarn build
