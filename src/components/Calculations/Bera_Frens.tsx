@@ -4,12 +4,12 @@ import { Network, Alchemy } from "alchemy-sdk";
 import { BERA_FRENS } from "../../utils/ValueConverter";
 
 const utils = {
-  hexToDecimal: (hex) => {
+  hexToDecimal: (hex: string) => {
     const cleanHex = hex.startsWith("0x") ? hex.slice(2) : hex;
     return parseInt(cleanHex, 16);
   },
 
-  formatTokenAmount: (amount, decimals = 18) => {
+  formatTokenAmount: (amount: number, decimals = 18) => {
     const divisor = Math.pow(10, decimals);
     const formatted = amount / divisor;
 
@@ -20,9 +20,16 @@ const utils = {
   },
 };
 
-let lastFullFrensResult = null;
+let lastFullFrensResult: {
+  eligible: boolean;
+  message?: string;
+  balance?: string;
+  usdValue?: number;
+  symbol?: string;
+  tokenName?: string;
+} | null = null;
 
-export async function checkBeraFrensEligibility(address) {
+export async function checkBeraFrensEligibility(address: string) {
   if (!address) {
     console.log("No wallet connected");
     lastFullFrensResult = { eligible: false, message: "No wallet connected" };
@@ -53,7 +60,9 @@ export async function checkBeraFrensEligibility(address) {
 
     // Convert hex balance to decimal
     const tokenBalance = response.tokenBalances[0];
-    const decimalBalance = utils.hexToDecimal(tokenBalance.tokenBalance);
+    const decimalBalance = utils.hexToDecimal(
+      tokenBalance.tokenBalance as string,
+    );
 
     // Get token metadata
     const metadata = await alchemy.core.getTokenMetadata(contractAddress);
@@ -61,7 +70,7 @@ export async function checkBeraFrensEligibility(address) {
     // Format the balance
     const formattedBalance = utils.formatTokenAmount(
       decimalBalance,
-      metadata.decimals,
+      metadata.decimals as number,
     );
 
     const tokenCount = parseFloat(formattedBalance);
@@ -85,7 +94,7 @@ export async function checkBeraFrensEligibility(address) {
 
     // Return only the token count as an integer
     return Math.floor(tokenCount);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error checking eligibility:", error);
     lastFullFrensResult = {
       eligible: false,
@@ -99,6 +108,6 @@ export function getLastFullFrensResult() {
   return lastFullFrensResult;
 }
 
-export default function BeraFrensBalance({ address }) {
+export default function BeraFrensBalance({ address }: { address: string }) {
   return checkBeraFrensEligibility(address);
 }

@@ -34,7 +34,7 @@ export default function EligibilityChecker() {
   const { address, isConnected } = useAccount();
   // const address = "0xf96Be336D78294633A04b10b97fA78DbFA8841C0";
   // const isConnected = true;
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 

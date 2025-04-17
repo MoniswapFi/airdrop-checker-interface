@@ -1,72 +1,72 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: "MinecraftRegular";
-    src: url("/fonts/MinecraftRegular.otf") format("opentype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "MinecraftRegular";
+  src: url("/fonts/MinecraftRegular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 :root,
 [data-theme] {
-    background: oklch(var(--b2));
-    font-family: "MinecraftRegular", system-ui, sans-serif;
+  background: oklch(var(--b2));
+  font-family: "MinecraftRegular", system-ui, sans-serif;
 }
 
 body {
-    min-height: 100vh;
-    font-family: "MinecraftRegular", system-ui, sans-serif;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)),
-        url("/background.png");
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  min-height: 100vh;
+  font-family: "MinecraftRegular", system-ui, sans-serif;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)),
+    url("/background.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 /* For mobile devices - adjust background for better visibility */
 @media (max-width: 768px) {
-    body {
-        background-size: auto 100%;
-        background-position: center top;
-    }
+  body {
+    background-size: auto 100%;
+    background-position: center top;
+  }
 }
 
 /* Make sure content is readable over the background */
 .content-container {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    max-width: 90%;
-    margin: 0 auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 90%;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* For tablet and up */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .content-container {
-        max-width: 80%;
-    }
+  .content-container {
+    max-width: 80%;
+  }
 }
 
 /* For desktop */
 @media (min-width: 1025px) {
-    .content-container {
-        max-width: 70%;
-    }
+  .content-container {
+    max-width: 70%;
+  }
 }
 
 h1,
 h2,
 h3,
 h4 {
-    margin-bottom: 0.5rem;
-    line-height: 1;
-    font-family: "MinecraftRegular", system-ui, sans-serif;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+  font-family: "MinecraftRegular", system-ui, sans-serif;
 }
 
 p {
-    margin: 1rem 0;
-    font-family: "MinecraftRegular", system-ui, sans-serif;
+  margin: 1rem 0;
+  font-family: "MinecraftRegular", system-ui, sans-serif;
 }
