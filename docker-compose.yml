@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  airdrop-checker:
+    hostname: airdrop-checker
+    container_name: airdrop-checker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # networks:
+    #     - admin-cockpit
+    ports:
+      - 5677:5677
